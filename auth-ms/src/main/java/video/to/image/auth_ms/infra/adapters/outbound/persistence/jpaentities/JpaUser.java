@@ -5,18 +5,20 @@ import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tbUser")
+@Table(name = "tb_user")
 public class JpaUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(length = 255)
     private String name;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true, length = 255)
     private String email;
 
+    @Column(nullable = false, length = 255)
     private String password;
 
     public JpaUser() {}

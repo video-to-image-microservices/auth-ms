@@ -1,12 +1,20 @@
 services:
-  postgres:
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: auth_ms
-      POSTGRES_USER: usr
-      POSTGRES_PASSWORD: pwd
+  auth-ms:
+    build: .
     ports:
-      - "5432:5432"
+      - "8082:8082"
+    environment:
+      # TODO script liquibase rodando uma única vez no CI/CD
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${DB_HOST:-host.docker.internal}:5432/auth_ms
+      SPRING_DATASOURCE_USERNAME: usr
+      SPRING_DATASOURCE_PASSWORD: pwd
+      SPRING_LIQUIBASE_ENABLED: "true"
+      SPRING_CLOUD_AWS_SQS_ENDPOINT: http://localstack:4566
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      localstack:
+        condition: service_started
 
   localstack:
     # latest (2026.x) exige LOCALSTACK_AUTH_TOKEN; 4.14 funciona sem conta

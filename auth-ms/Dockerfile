@@ -1,9 +1,24 @@
-FROM postgres:latest
+FROM maven:3.9-eclipse-temurin-17 AS build
 
-ENV POSTGRES_DB=auth_ms
+WORKDIR /app
 
-ENV POSTGRES_USER=usr
+COPY pom.xml .
+COPY .mvn .mvn
+COPY mvnw .
+RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
 
-ENV POSTGRES_PASSWORD=pwd
+COPY src ./src
+RUN ./mvnw package -DskipTests -B
 
-EXPOSE 5432
+FROM eclipse-temurin:17-jre-alpine AS runtime
+
+WORKDIR /app
+
+RUN addgroup -S spring && adduser -S spring -G spring
+USER spring:spring
+
+COPY --from=build /app/target/*.jar app.jar
+
+EXPOSE 8082
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
