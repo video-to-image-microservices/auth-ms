@@ -1,0 +1,9 @@
+FROM postgres:latest
+
+ENV POSTGRES_DB=auth_ms
+
+ENV POSTGRES_USER=usr
+
+ENV POSTGRES_PASSWORD=pwd
+
+EXPOSE 5432
