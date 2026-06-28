@@ -15,6 +15,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import video.to.image.auth_ms.core.domain.enums.ConstMessagesEnum;
 import video.to.image.auth_ms.core.domain.exceptions.ConflictException;
 import video.to.image.auth_ms.core.domain.exceptions.NotFoundException;
+import video.to.image.auth_ms.core.domain.exceptions.UnauthorizedException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -35,6 +36,13 @@ public class HttpExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(new HttpExceptionMessage(HttpStatus.CONFLICT.value(), e.getMessage()));
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<HttpExceptionMessage> handleUnauthorized(UnauthorizedException e) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(new HttpExceptionMessage(HttpStatus.UNAUTHORIZED.value(), e.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -9,6 +9,7 @@ import java.util.UUID;
 public interface UserRepositoryOutputPort {
     User save(User user);
     Optional<User> findById(UUID id);
+    Optional<User> findByEmail(String email);
     List<User> findAll();
     void delete(User user);
     boolean existsByEmail(String email);

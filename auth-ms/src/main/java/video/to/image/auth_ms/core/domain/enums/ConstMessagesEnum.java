@@ -6,7 +6,8 @@ public enum ConstMessagesEnum {
     VALIDATION_FAILED("Dados inválidos"),
     INVALID_REQUEST("Requisição inválida"),
     DATA_INTEGRITY_VIOLATION("Violação de integridade dos dados"),
-    INTERNAL_ERROR("Erro interno do servidor");
+    INTERNAL_ERROR("Erro interno do servidor"),
+    INVALID_CREDENTIALS("Credenciais inválidas");
 
     private final String messageBase;
 

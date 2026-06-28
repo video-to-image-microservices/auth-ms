@@ -61,6 +61,10 @@ public class UserController {
                     mediaType = "application/json",
                     schema = @Schema(implementation = HttpExceptionMessage.class)
             )),
+            @ApiResponse(responseCode = "401", description = "Não autenticado", content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = HttpExceptionMessage.class)
+            )),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = HttpExceptionMessage.class)
@@ -85,6 +89,10 @@ public class UserController {
     )
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Encontrados com sucesso"),
+            @ApiResponse(responseCode = "401", description = "Não autenticado", content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = HttpExceptionMessage.class)
+            )),
             @ApiResponse(responseCode = "500", description = "Erro interno", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = HttpExceptionMessage.class)
@@ -105,6 +113,10 @@ public class UserController {
     )
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Encontrado com sucesso"),
+            @ApiResponse(responseCode = "401", description = "Não autenticado", content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = HttpExceptionMessage.class)
+            )),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = HttpExceptionMessage.class)
@@ -126,6 +138,10 @@ public class UserController {
     )
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Deletado com sucesso"),
+            @ApiResponse(responseCode = "401", description = "Não autenticado", content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = HttpExceptionMessage.class)
+            )),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = HttpExceptionMessage.class)

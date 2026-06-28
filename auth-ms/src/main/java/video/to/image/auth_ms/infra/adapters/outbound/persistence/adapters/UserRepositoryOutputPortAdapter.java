@@ -33,6 +33,11 @@ public class UserRepositoryOutputPortAdapter implements UserRepositoryOutputPort
     }
 
     @Override
+    public Optional<User> findByEmail(String email) {
+        return this.repository.findByEmail(email).map(this.mapper::toDomain);
+    }
+
+    @Override
     public List<User> findAll() {
         return this.repository.findAll().stream().map(this.mapper::toDomain).toList();
     }
