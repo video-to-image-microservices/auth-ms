@@ -1,6 +1,7 @@
 package video.to.image.auth_ms.core.application.usecases;
 
 import video.to.image.auth_ms.core.application.ports.in.UserCrudUseCaseInputPort;
+import video.to.image.auth_ms.core.application.ports.out.PasswordEncoderOutputPort;
 import video.to.image.auth_ms.core.application.ports.out.UserRepositoryOutputPort;
 import video.to.image.auth_ms.core.domain.entities.User;
 import video.to.image.auth_ms.core.domain.enums.ConstMessagesEnum;
@@ -13,9 +14,11 @@ import java.util.UUID;
 public class UserCrudUseCase implements UserCrudUseCaseInputPort {
 
     private final UserRepositoryOutputPort userRepository;
+    private final PasswordEncoderOutputPort passwordEncoder;
 
-    public UserCrudUseCase(UserRepositoryOutputPort userRepository) {
+    public UserCrudUseCase(UserRepositoryOutputPort userRepository, PasswordEncoderOutputPort passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -28,6 +31,7 @@ public class UserCrudUseCase implements UserCrudUseCaseInputPort {
         if (this.userRepository.existsByEmail(user.getEmail())) {
             throw new ConflictException(ConstMessagesEnum.EMAIL_ALREADY_EXISTS.getMessagem());
         }
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         return this.userRepository.save(user);
     }
 
