@@ -42,43 +42,6 @@ Este serviço concentra **quem o usuário é** e **se as credenciais são válid
 1. Recebem o header `Authorization: Bearer <token>` do cliente
 2. Validam assinatura e expiração do JWT (mesmo `JWT_SECRET` ou chave pública, conforme estratégia)
 3. Extraem claims (`userId`, `email`, `name`) e aplicam **suas próprias regras de autorização**
-
-```mermaid
-flowchart TB
-    Client[Cliente / Frontend]
-
-    subgraph authMs [auth-ms - Autenticação centralizada]
-        Login[POST /auth/login]
-        Register[POST /users]
-        JWT[Geração JWT HS256]
-        Events[Publicação SQS]
-    end
-
-    subgraph consumers [Outros microserviços - Autorização descentralizada]
-        VideoMS[video-ms]
-        ImageMS[image-ms]
-        OtherMS[outros...]
-    end
-
-    DB[(PostgreSQL)]
-    SQS[(SQS / LocalStack)]
-
-    Client -->|credenciais| Login
-    Client -->|cadastro| Register
-    Login --> JWT
-    Register --> DB
-    Register --> Events
-    Events --> SQS
-
-    Client -->|Bearer token| VideoMS
-    Client -->|Bearer token| ImageMS
-    SQS -->|user-created / user-deleted| VideoMS
-    SQS -->|user-created / user-deleted| ImageMS
-
-    VideoMS -->|valida JWT + regras próprias| VideoMS
-    ImageMS -->|valida JWT + regras próprias| ImageMS
-```
-
 ---
 
 ## Stack
