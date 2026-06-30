@@ -22,8 +22,6 @@ services:
       - "27017:27017"
     environment:
       MONGO_INITDB_DATABASE: auth_ms
-    volumes:
-      - mongo_data:/data/db
 
   localstack:
     # latest (2026.x) exige LOCALSTACK_AUTH_TOKEN; 4.14 funciona sem conta
@@ -40,6 +38,3 @@ services:
     image: redis:7-alpine
     ports:
       - "6379:6379"
-
-volumes:
-  mongo_data:
